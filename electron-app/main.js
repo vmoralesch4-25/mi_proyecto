@@ -1,21 +1,44 @@
 const { app, BrowserWindow } = require('electron');
 const path = require('path');
+const fs = require('fs');
 const { spawn } = require('child_process');
 
 let backendProcess;
 
-function getBackendPath() {
+function getBackendCommand() {
+  // 1. App empaquetada: usa el .exe incluido en resources
   if (app.isPackaged) {
-    return path.join(process.resourcesPath, 'backend', 'handsup-backend.exe');
+    return {
+      cmd: path.join(process.resourcesPath, 'backend', 'handsup-backend.exe'),
+      args: [],
+      cwd: undefined
+    };
   }
-  return path.join(__dirname, '..', 'python-backend', 'dist', 'handsup-backend', 'handsup-backend.exe');
+
+  // 2. Desarrollo con el .exe compilado, si existe
+  const exePath = path.join(__dirname, '..', 'python-backend', 'dist', 'handsup-backend', 'handsup-backend.exe');
+  if (fs.existsSync(exePath)) {
+    return { cmd: exePath, args: [], cwd: undefined };
+  }
+
+  // 3. Desarrollo con Python directo (venv)
+  const backendDir = path.join(__dirname, '..', 'python-backend');
+  return {
+    cmd: path.join(backendDir, 'venv', 'Scripts', 'python.exe'),
+    args: [path.join('src', 'main.py')],
+    cwd: backendDir
+  };
 }
 
 function startBackend() {
-  const backendPath = getBackendPath();
-  console.log('Iniciando backend desde:', backendPath);
-  
-  backendProcess = spawn(backendPath, [], { windowsHide: true });
+  const { cmd, args, cwd } = getBackendCommand();
+  console.log('Iniciando backend:', cmd, args.join(' '));
+
+  backendProcess = spawn(cmd, args, { windowsHide: true, cwd });
+
+  backendProcess.on('error', (err) => {
+    console.error('No se pudo iniciar el backend:', err.message);
+  });
 
   backendProcess.stdout.on('data', (data) => {
     console.log(`Backend Log: ${data}`);
