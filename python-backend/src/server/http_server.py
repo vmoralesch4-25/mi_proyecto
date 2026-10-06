@@ -4,7 +4,7 @@ from http.server import HTTPServer, BaseHTTPRequestHandler
 import base64
 import numpy as np
 import cv2
-import tensorflow as tf
+from ai_edge_litert.interpreter import Interpreter
 
 INTERPRETER = None
 INPUT_DETAILS = None
@@ -80,13 +80,13 @@ def start_server(model_path, static_path, port):
     logging.info(f"Cargando modelo TFLite: {model_path}")
     
     # Cargar modelo TFLite e inicializar tensores
-    INTERPRETER = tf.lite.Interpreter(model_path=model_path)
+    INTERPRETER = Interpreter(model_path=model_path)
     INTERPRETER.allocate_tensors()
     INPUT_DETAILS = INTERPRETER.get_input_details()
     OUTPUT_DETAILS = INTERPRETER.get_output_details()
     
     # IMPORTANTE: Cambia esto por las letras de lenguaje de señas que reconoce tu modelo
-    CLASS_NAMES = ['A', 'B', 'C'] 
+    CLASS_NAMES = [str(i) for i in range(int(OUTPUT_DETAILS[0]['shape'][-1]))]
     
     logging.info(f"✅ Servidor iniciado en http://127.0.0.1:{port}")
     
