@@ -40,7 +40,8 @@ class PredictionHandler(BaseHTTPRequestHandler):
                 image = cv2.imdecode(np.frombuffer(image_bytes, np.uint8), cv2.IMREAD_COLOR)
                 
                 # Preprocesar imagen
-                image = cv2.resize(image, (200, 200))
+                _, h, w, _ = INPUT_DETAILS[0]['shape']
+                image = cv2.resize(image, (int(w), int(h)))
                 image = image / 255.0
                 # TFLite requiere el tipo de dato float32
                 image = np.expand_dims(image, axis=0).astype(np.float32)
