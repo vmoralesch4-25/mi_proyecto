@@ -7,3 +7,8 @@
 - Pendiente: main.js sigue apuntando a venv; requirements.txt sigue con TensorFlow.
 - Entorno ligero: py -3.11 -m venv venv-lite ; python -m pip install -r python-backend/requirements-litert.txt
 - Si pip.exe esta bloqueado, usar siempre: python -m pip
+
+## Actualizacion
+- CLASS_NAMES: orden A-Q sin J, confirmado en 14 de 16 clases; G (6) y N (12) por eliminacion. N.jpg se clasifica como E (0.51).
+- referencia_tensorflow.txt: salida de test_all.py con TensorFlow. Para comparar: arrancar el servidor con venv-lite, correr 'python test_all.py > litert.txt' y 'fc.exe referencia_tensorflow.txt litert.txt'.
+- La comparacion LiteRT vs TensorFlow sigue PENDIENTE.

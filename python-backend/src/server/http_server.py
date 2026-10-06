@@ -86,7 +86,8 @@ def start_server(model_path, static_path, port):
     OUTPUT_DETAILS = INTERPRETER.get_output_details()
     
     # IMPORTANTE: Cambia esto por las letras de lenguaje de señas que reconoce tu modelo
-    CLASS_NAMES = [str(i) for i in range(int(OUTPUT_DETAILS[0]['shape'][-1]))]
+    # Orden deducido de las pruebas (A-Q sin J). G y N no verificadas con imagen propia.
+    CLASS_NAMES = ['A','B','C','D','E','F','G','H','I','K','L','M','N','O','P','Q']
     
     logging.info(f"✅ Servidor iniciado en http://127.0.0.1:{port}")
     
