@@ -7,3 +7,5 @@ venv/
 .venv/
 build/
 venv*/
+python-backend/base*.txt
+python-backend/litert.txt
