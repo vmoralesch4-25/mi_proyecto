@@ -12,3 +12,8 @@
 - CLASS_NAMES: orden A-Q sin J, confirmado en 14 de 16 clases; G (6) y N (12) por eliminacion. N.jpg se clasifica como E (0.51).
 - referencia_tensorflow.txt: salida de test_all.py con TensorFlow. Para comparar: arrancar el servidor con venv-lite, correr 'python test_all.py > litert.txt' y 'fc.exe referencia_tensorflow.txt litert.txt'.
 - La comparacion LiteRT vs TensorFlow sigue PENDIENTE.
+
+## Actualizacion
+- CLASS_NAMES: orden A-Q sin J, confirmado en 14 de 16 clases; G (6) y N (12) por eliminacion. N.jpg se clasifica como E (0.51).
+- referencia_tensorflow.txt: salida de test_all.py con TensorFlow. Para comparar: servidor con venv-lite, 'python test_all.py > litert.txt' y 'fc.exe referencia_tensorflow.txt litert.txt'.
+- La comparacion LiteRT vs TensorFlow sigue PENDIENTE.
